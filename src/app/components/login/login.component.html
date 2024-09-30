@@ -1,0 +1,17 @@
+<div class="center login">
+    <div class="header">
+        <h2>Login</h2>
+    </div>
+    <div class="field">
+        <form>
+            <input placeholder="Informe o seu login" class="form-control" name="login" [(ngModel)]="atendenteForm.name" />
+            <input placeholder="Informe a sua senha" type="password" class="form-control" name="senha" (keyup)="$event.keyCode === 13 && login()" [(ngModel)]="atendenteForm.senha" />
+        </form>
+    </div>
+    <div class="button">
+        <button class="btn btn-sm btn-primary" (click)="login()">Login</button>
+    </div>
+    <div class="signup">
+        <a class="signup_text" routerLink="/signup">Cadastre-se</a>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="position_center">
+    <div class="col-md-4" style="float: left; margin-top: 15px;">
+        <div class="user-list-card">
+            <div class="person">
+                <div class="person-img">
+                    <img (click)="openEditPerson()" [src]="atendenteForm.image" [alt]="image_person" />
+                </div>
+                <div class="logout">
+                    <button (click)="deslogar()"><i class="material-icons">logout</i></button>
+                </div>
+            </div>
+            <div class="contatos">
+                <div class="search_user">
+                    <div class="search">
+                        <input type="search" [(ngModel)]="userName" (keyup)="$event.keyCode === 13 && search()" class="input_search">
+                        <span class="input-group-addon">
+                      <button (click)="search()" class="fa fa-search" style="background:transparent;border:none"></button>
+                    </span>
+                    </div>
+                    <!-- <div class=" add ">
+                    <button class="btn "><i class="fa fa-plus " style="font-size: 22px; color: #272727; "></i></button>
+                </div> -->
+                </div>
+                <div *ngIf="searchNumber == 1">
+                    <div class="user-card" *ngFor="let user of searchResult" ngClass="{{user?.name === selectedUser?.name && 'active'}}" (click)="selectUserHandler(user.name)">
+                        <img [src]="user.image" [alt]="user.name" class="avatar" />
+                        <p class="username">{{user.name}}</p>
+                    </div>
+                </div>
+                <div *ngIf="searchNumber == 0">
+                    <div class="user-card" *ngFor="let user of allNewAtendente" ngClass="{{user?.name === selectedUser?.name && 'active'}}" (click)="selectUserHandler(user.name)">
+                        <img [src]="user.image" [alt]="user.name" class="avatar" />
+                        <p class="username">{{user.name}}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="person_dados">
+                <div class="person">
+                    <div class="person-img">
+                        <img [src]="atendenteForm.image" [alt]="image_person" />
+                        <div class="edit_img">
+                            <label for="person_img"><i class="material-icons">edit</i></label>
+                            <input type="file" class="" accept="image/*" name="person_img" id="person_img" (change)="onChangeImgPerson($event) " placeholder="Imagem">
+                        </div>
+                        <button (click)="updatePerson()" class="fa fa-close" style="background:transparent;border:none"></button>
+                        <div class="clear"></div>
+                        <h3>Nome:</h3>
+                        <h3>{{atendenteForm.name}}</h3>
+                        <div class="clear"></div>
+                        <h3>Número:</h3>
+                        <h3>{{atendenteForm.phone}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 " style="float: right; margin-top: 15px; ">
+        <div class="chat-container ">
+            <ng-container *ngIf="selectedUser">
+                <div class="chat-header">
+                    <img [src]="selectedUser?.image" [alt]="selectedUser?.name" class="avatar" />
+                    <p class="username">{{selectedUser?.name}}</p>
+                </div>
+                <div class="chat-body" id="scroll">
+                    <div *ngFor="let item of messageArray" ngClass="{{item?.user === currentUser?.name && 'same-user'}}">
+                        <p *ngIf="item.message" class="message-container">{{item?.message}}</p>
+                        <img id="img" width="350px" *ngIf="item.image" style="height: 320px !important; border-radius: 5px !important; margin-bottom: 20px !important;" [src]="item?.image">
+                        <div *ngIf="item.arquivo" class="arquivo_estrutura">
+                            <div class="arquivo_header">
+                                <div class="icone"> <i class="fa fa-file"></i></div>
+                                <div class="nome">
+                                    <p>{{item?.arquivo}}</p>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="arquivo_footer">
+                                <button (click)="downloadfile(item.arquivo)"> <i class="fa fa-download"></i> Download</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="imageSelect" class="img_class">
+                        <button class="btn_close" (click)="closeImg()"><i class="fa fa-close"></i></button>
+                        <img src="{{image}}" alt="">
+                        <button class="btn btn-sm px-3" style="border: 0;" (click)="sendImage()"><i class="fa fa-send"></i></button>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <div class="chat-footer ">
+                    <div class="row ">
+                        <div class="col-md-1">
+                            <div ngbDropdown style="display: inline-block;">
+                                <button type="button" class="btn btn-outline" id="dropdownConfig" style="border: 0;" ngbDropdownToggle><i class="fa fa-paperclip"></i></button>
+                                <div class="dropbtn" ngbDropdownMenu aria-labelledby="dropdownConfig">
+                                    <button>
+                                      <label for="arquivo"> <i class="fa fa-image"></i> Foto ou vídeo</label>
+                                      <input type="file" class="" accept="image/*" name="arquivo" [(ngModel)]="arquivo" (change)="onChange($event)" id="arquivo">
+                                    </button>
+                                    <button>
+                                      <label for="arquivo_file"> <i class="fa fa-file"></i> Arquivo</label>
+                                      <input type="file" class="" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.csv" (change)="handleFileInput($event)" name="arquivo_file" id="arquivo_file" >
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 ">
+                            <div class="form-group mb-0 ">
+                                <input #search type="text" placeholder="Mensagem " [libFocus]="true" [setFocus]="focusEvent" class="form-control " [(ngModel)]="messageText" (keyup)="$event.keyCode === 13 && sendMessage()" />
+                            </div>
+                        </div>
+                        <div class="col-md-1 text-center align-self-center ">
+                            <button class="btn btn-sm px-3" style="border: 0;" (click)="sendMessage()"><i class="fa fa-send " style="font-size: 20px; display: inline-block;"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </ng-container>
+        </div>
+    </div>

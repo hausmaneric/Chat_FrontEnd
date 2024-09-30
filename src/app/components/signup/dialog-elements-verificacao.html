@@ -1,0 +1,29 @@
+<style>
+    * {
+        width: 220px;
+        height: 40px;
+        text-align: center;
+    }
+    
+    h4 {
+        margin-left: 10%;
+        margin-bottom: 48px;
+        margin-top: 5px;
+    }
+    
+    button {
+        margin-left: 30% !important;
+        background-color: #f44336;
+        border: 0;
+        border-radius: 5px;
+        width: 90px;
+        height: 30px;
+        color: white;
+    }
+</style>
+
+<h4 mat-dialog-title>Senha e confirmação devem ser iguais!</h4>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="fecharDialog()" mat-dialog-close>Fechar</button>
+</div>

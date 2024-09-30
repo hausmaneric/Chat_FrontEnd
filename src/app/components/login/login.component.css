@@ -1,0 +1,41 @@
+.login {
+    width: 400px;
+    padding: 8px !important;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    height: 230px;
+    box-shadow: 3px 5px 5px black;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-group input {
+    width: 85% !important;
+    height: 30px;
+}
+
+.btn {
+    width: 80px;
+}
+
+.button {
+    margin-top: 15px;
+}
+
+.signup {
+    margin-top: 5px;
+}
+
+.signup_text {
+    text-decoration: none;
+    color: white;
+    float: left;
+}
+
+.form-control {
+    margin-top: 10px;
+    text-transform: capitalize;
+}
